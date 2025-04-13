@@ -21,18 +21,19 @@ return [
      * Optionally you can disable client events so clients cannot send
      * messages to each other via the webSockets.
      */
-    'apps' => [
-        [
-            'id' => env('PUSHER_APP_ID'),
-            'name' => env('APP_NAME'),
-            'key' => env('PUSHER_APP_KEY'),
-            'secret' => env('PUSHER_APP_SECRET'),
-            'path' => env('PUSHER_APP_PATH'),
-            'capacity' => null,
-            'enable_client_messages' => false,
-            'enable_statistics' => true,
-        ],
+   'apps' => [
+    [
+        'id' => env('PUSHER_APP_ID', '1973660'),
+        'name' => env('APP_NAME', 'UpanishadAI'),
+        'key' => env('PUSHER_APP_KEY', '20dccbda8996e1fe6603'),
+        'secret' => env('PUSHER_APP_SECRET', 'fca5235c275cb501e19f'),
+        'path' => env('PUSHER_APP_PATH'),
+        'capacity' => null,
+        'enable_client_messages' => false,
+        'enable_statistics' => true,
     ],
+],
+
 
     /*
      * This class is responsible for finding the apps. The default provider

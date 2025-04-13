@@ -27,16 +27,6 @@ class UIComponentTriggered implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.' . $this->sessionId);
-    }
-
-    public function broadcastWith()
-    {
-        return [
-            'type' => 'trigger',
-            'component' => $this->component,
-            'config' => $this->config,
-            'timestamp' => now(),
-        ];
+        return new Channel('chat.' . $this->sessionId);
     }
 }

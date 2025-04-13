@@ -82,12 +82,12 @@
     FileText, Gamepad, BookOpen, Volume2, 
     Book, Laugh, Sparkles, Trophy 
   } from 'lucide-vue-next';
-  import { LottiePlayer } from '@lottiefiles/vue-lottie-player';
+  // import LottiePlayer from '@lottiefiles/vue-lottie-player';
   
   export default {
     name: 'ChatView',
     components: {
-      LottiePlayer,
+      // LottiePlayer,
       FileText, Gamepad, BookOpen, Volume2, 
       Book, Laugh, Sparkles, Trophy
     },
@@ -150,6 +150,29 @@
       // Clean up listeners when component is destroyed
       this.cleanupChatListeners(this.sessionId);
     },
+    mounted() {
+    // This is where you add the code
+    window.Echo.channel(`chat.${this.sessionId}`)
+      .listen('MessageSent', (e) => {
+          this.messages.push(e.message);
+          this.scrollToBottom();
+      })
+      .listen('AgentTyping', (e) => {
+          this.isAgentTyping = e.isTyping;
+          
+          // Auto reset typing indicator after 30 seconds
+          if (this.typingTimer) {
+              clearTimeout(this.typingTimer);
+          }
+          
+          this.typingTimer = setTimeout(() => {
+              this.isAgentTyping = false;
+          }, 30000);
+      });
+      
+    // If you have other mounted code like fetching initial messages
+    this.fetchMessages();
+  },
     methods: {
       ...mapActions({
         fetchSession: 'chat/fetchSession',

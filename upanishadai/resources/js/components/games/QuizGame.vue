@@ -69,7 +69,7 @@
   
   <script>
   import { X } from 'lucide-vue-next';
-  import { LottiePlayer } from '@lottiefiles/vue-lottie-player';
+  import LottiePlayer from '@lottiefiles/vue-lottie-player';
   import { mapActions } from 'vuex';
   
   export default {

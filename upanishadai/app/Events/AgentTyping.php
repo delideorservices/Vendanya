@@ -15,22 +15,16 @@ class AgentTyping implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $sessionId;
+    public $isTyping;
 
-    public function __construct($sessionId)
+    public function __construct($sessionId, $isTyping = true)
     {
         $this->sessionId = $sessionId;
+        $this->isTyping = $isTyping;
     }
 
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.' . $this->sessionId);
-    }
-
-    public function broadcastWith()
-    {
-        return [
-            'isTyping' => true,
-            'timestamp' => now(),
-        ];
+        return new Channel('chat.' . $this->sessionId);
     }
 }

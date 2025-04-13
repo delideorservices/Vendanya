@@ -23,7 +23,7 @@
   </template>
   
   <script>
-  import { LottiePlayer } from '@lottiefiles/vue-lottie-player';
+  import LottiePlayer from '@lottiefiles/vue-lottie-player';
   
   export default {
     name: 'LevelUpNotification',

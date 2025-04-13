@@ -3,34 +3,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Custom utility classes like the ones from your chat UI example */
-@layer components {
-  .glass {
-    @apply bg-opacity-4 backdrop-blur-md border border-white/6;
-  }
-  
-  .tab-button {
-    @apply transition-all duration-300 flex items-center gap-3;
-  }
-  
-  .tab-button:hover {
-    @apply bg-white/8 translate-x-1.5;
-  }
-  
-  .chat-bubble {
-    @apply rounded-xl p-4 leading-relaxed shadow-lg;
-  }
-  
-  .dot-typing::after {
-    content: ' .';
-    animation: dots 1.5s steps(5, end) infinite;
-  }
-}
-
-@keyframes dots {
-  0%, 20% { content: ' .'; }
-  40% { content: ' ..'; }
-  60% { content: ' ...'; }
-  100% { content: ' .'; }
-}

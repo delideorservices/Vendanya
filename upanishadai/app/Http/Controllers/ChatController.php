@@ -32,36 +32,36 @@ class ChatController extends Controller
     }
 
     public function sendMessage(Request $request, $sessionId)
-    {
-        $chatSession = ChatSession::where('user_id', Auth::id())
-            ->findOrFail($sessionId);
-        
-        $validated = $request->validate([
-            'content' => 'required|string',
-        ]);
+{
+    $validated = $request->validate([
+        'content' => 'required|string',
+    ]);
 
-        // Create the user message
-        $message = ChatMessage::create([
-            'chat_session_id' => $chatSession->id,
-            'sender_type' => 'App\\Models\\User',
-            'sender_id' => Auth::id(),
-            'content' => $validated['content'],
-        ]);
+    $chatSession = ChatSession::where('user_id', Auth::id())
+        ->findOrFail($sessionId);
+    
+    // Create user message
+    $message = ChatMessage::create([
+        'chat_session_id' => $chatSession->id,
+        'sender_type' => 'App\\Models\\User',
+        'sender_id' => Auth::id(),
+        'content' => $validated['content'],
+    ]);
 
-        // Broadcast the message to the session channel
-        broadcast(new MessageSent($message))->toOthers();
+    // Broadcast message
+    broadcast(new MessageSent($message));
 
-        // Indicate that agent is typing
-        broadcast(new AgentTyping($chatSession->id))->toOthers();
+    // Show typing indicator for AI
+    broadcast(new AgentTyping($sessionId));
 
-        // Process the message with AI
-        $this->aiService->processUserMessage($chatSession, $message);
-        
-        return response()->json([
-            'message' => 'Message sent successfully',
-            'chat_message' => $message
-        ]);
-    }
+    // Process with AI
+    $this->aiService->processUserMessage($chatSession, $message);
+
+    return response()->json([
+        'success' => true,
+        'message_id' => $message->id
+    ]);
+}
 
     public function getMessages($sessionId)
     {

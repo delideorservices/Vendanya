@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::post('/broadcasting/auth', function () {
     return Auth::check() ? Auth::user() : abort(403);
 })->middleware(['web', 'auth']);
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
+Broadcast::routes();
